@@ -13,11 +13,4 @@ public class Aggregation {
     public static void main(String[] args) {
         SpringApplication.run(Aggregation.class, args);
     }
-
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder
-                .setReadTimeout(Duration.ofSeconds(5))
-                .build();
-    }
 }
