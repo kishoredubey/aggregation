@@ -15,13 +15,12 @@ public class BackendClientImpl implements BackendClient {
     public static final String PRICING_ENDPOINT = "/pricing?countryCode={countryCode}";
 
     private RestTemplate restTemplate;
+    @Value("${service.base-url}")
+    private String BASE_URI;
 
     public BackendClientImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
-    @Value("${service.base-url}")
-    private String BASE_URI;
 
     @Override
     public List<String> getShipmentStatus(String orderNumber) {

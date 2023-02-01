@@ -25,7 +25,7 @@ public class AggregationController {
             @RequestParam(required = false) List<String> shipmentOrderNumbers,
             @RequestParam(required = false) List<String> trackOrderNumbers,
             @RequestParam(required = false) List<String> pricingCountryCodes) {
-        AggregationResponse aggregation = aggregationService.getAggregatedProductDetail(shipmentOrderNumbers, trackOrderNumbers, pricingCountryCodes);
+        AggregationResponse aggregation = aggregationService.getAggregatedDetails(shipmentOrderNumbers, trackOrderNumbers, pricingCountryCodes);
         return new ResponseEntity<>(aggregation, HttpStatus.OK);
     }
 }

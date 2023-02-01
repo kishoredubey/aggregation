@@ -38,8 +38,9 @@ public class TrackingTask {
             latch.await();
         } catch (InterruptedException e) {
             // handle the error appropriately
+        } finally {
+            executor.shutdown();
         }
-        executor.shutdown();
         return response;
     }
 }

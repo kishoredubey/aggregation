@@ -1,0 +1,9 @@
+@startuml
+
+AggregationController -> AggregationService
+AggregationService -> ShipmentTask: desc
+AggregationService -> TrackingTas
+AggregationService -> PricingTask
+Alice -> Bob: Authentication Request
+
+@enduml

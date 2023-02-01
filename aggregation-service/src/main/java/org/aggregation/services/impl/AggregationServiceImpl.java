@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AggregationServiceImpl implements AggregationService {
@@ -26,20 +27,31 @@ public class AggregationServiceImpl implements AggregationService {
     }
 
     @Override
-    public AggregationResponse getAggregatedProductDetail(
+    public AggregationResponse getAggregatedDetails(
             List<String> shipmentOrderNumbers,
             List<String> trackOrderNumbers,
             List<String> pricingCountryCodes
     ) {
-        AggregationResponse aggregatedData = new AggregationResponse();
-        Map<String, List<String>> shipments = shipmentTask.submit(shipmentOrderNumbers);
-        Map<String, String> track = trackingTask.submit(trackOrderNumbers);
-        Map<String, String> prices = pricingTask.submit(pricingCountryCodes);
+        CompletableFuture<Map<String, List<String>>> shipmentResponse = CompletableFuture.supplyAsync(() -> {
+            return shipmentTask.submit(shipmentOrderNumbers);
+        });
 
-        aggregatedData.setShipments(shipments);
-        aggregatedData.setTrack(track);
-        aggregatedData.setPrices(prices);
-        return aggregatedData;
+        CompletableFuture<Map<String, String>> trackingResponse = CompletableFuture.supplyAsync(() -> {
+            return trackingTask.submit(trackOrderNumbers);
+        });
+
+        CompletableFuture<Map<String, String>> pricingResponse = CompletableFuture.supplyAsync(() -> {
+            return pricingTask.submit(pricingCountryCodes);
+        });
+
+        AggregationResponse aggregatedData = new AggregationResponse();
+        return CompletableFuture.allOf(shipmentResponse, trackingResponse, pricingResponse)
+                .thenApply(v -> {
+                    aggregatedData.setShipments(shipmentResponse.join());
+                    aggregatedData.setTrack(trackingResponse.join());
+                    aggregatedData.setPrices(pricingResponse.join());
+                    return aggregatedData;
+                }).join();
     }
 
 }
