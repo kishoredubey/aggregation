@@ -1,6 +1,7 @@
 package org.aggregation.services.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.aggregation.services.IBackendService;
 import org.aggregation.services.IProductService;
@@ -14,21 +15,21 @@ public class ProductServiceImpl implements IProductService{
 	IBackendService backendService;
 	
 	@Override
-	public Double getPrice(String countryCode) {
+	public Map<String, String> getPrice(List<String> countryCodes) {
 		// TODO Auto-generated method stub
-		return backendService.getPriceOfProduct(countryCode);
+		return backendService.getPriceOfProduct(countryCodes);
 	}
 
 	@Override
-	public List<String> getShipmentProducts(String orderNumber) {
+	public Map<String, List<String>> getShipmentProducts(List<String> orderNumbers) {
 		// TODO Auto-generated method stub
-		return backendService.getShipmentProducts(orderNumber);
+		return backendService.getShipmentProducts(orderNumbers);
 	}
 
 	@Override
-	public String getStatus(String orderNumber) {
+	public Map<String, String> getStatus(List<String> orderNumbers) {
 		// TODO Auto-generated method stub
-		return backendService.getTrackProductStatus(orderNumber);
+		return backendService.getTrackProductStatus(orderNumbers);
 	}
 	
 
