@@ -1,7 +1,6 @@
-package org.aggregation.services.impl;
+package org.aggregation.services;
 
 import org.aggregation.dto.AggregationResponse;
-import org.aggregation.services.AggregationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

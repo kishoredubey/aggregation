@@ -1,4 +1,4 @@
-package org.aggregation.services.impl;
+package org.aggregation.services;
 
 import org.aggregation.services.BackendClient;
 import org.springframework.stereotype.Component;
@@ -11,15 +11,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
-public class ShipmentTask {
+public class PricingTask {
     private BackendClient backendClient;
 
-    public ShipmentTask(BackendClient backendClient) {
+    public PricingTask(BackendClient backendClient) {
         this.backendClient = backendClient;
     }
 
-    public Map<String, List<String>> submit(List<String> orders) {
-        Map<String, List<String>> response = new HashMap<>();
+    public Map<String, String> submit(List<String> orders) {
+        Map<String, String> response = new HashMap<>();
         if (orders == null || orders.isEmpty()) return response;
 
         CountDownLatch latch = new CountDownLatch(orders.size());
@@ -27,9 +27,9 @@ public class ShipmentTask {
         for (String order : orders) {
             executor.execute(() -> {
                 // code to be executed asynchronously
-                List<String> status = backendClient.getShipmentStatus(order);
-                if (status != null) {
-                    response.put(order, status);
+                String price = backendClient.getPricing(order);
+                if (price != null) {
+                    response.put(order, price);
                 }
                 latch.countDown();
             });

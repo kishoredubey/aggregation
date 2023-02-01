@@ -1,4 +1,4 @@
-package org.aggregation.services.impl;
+package org.aggregation.services;
 
 import org.aggregation.services.BackendClient;
 import org.springframework.beans.factory.annotation.Value;
