@@ -1,4 +1,4 @@
-package org.aggregation.dto;
+package org.aggregation.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

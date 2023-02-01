@@ -1,7 +1,7 @@
 spring:
-  application: 
+  application:
     name: product-service
-    
-service: 
+
+service:
   base-url: http://127.0.0.1:4000
   timeout: 5

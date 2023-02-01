@@ -1,6 +1,6 @@
 package org.aggregation.services;
 
-import org.aggregation.dto.AggregationResponse;
+import org.aggregation.model.AggregationResponse;
 import org.aggregation.task.PricingTask;
 import org.aggregation.task.ShipmentTask;
 import org.aggregation.task.TrackingTask;
@@ -34,17 +34,17 @@ public class AggregationServiceImpl implements AggregationService {
             List<String> trackOrderNumbers,
             List<String> pricingCountryCodes
     ) {
-        CompletableFuture<Map<String, List<String>>> shipmentResponse = CompletableFuture.supplyAsync(() -> {
-            return shipmentTask.submit(shipmentOrderNumbers);
-        });
+        CompletableFuture<Map<String, List<String>>> shipmentResponse = CompletableFuture.supplyAsync(() ->
+                shipmentTask.submit(shipmentOrderNumbers)
+        );
 
-        CompletableFuture<Map<String, String>> trackingResponse = CompletableFuture.supplyAsync(() -> {
-            return trackingTask.submit(trackOrderNumbers);
-        });
+        CompletableFuture<Map<String, String>> trackingResponse = CompletableFuture.supplyAsync(() ->
+                trackingTask.submit(trackOrderNumbers)
+        );
 
-        CompletableFuture<Map<String, String>> pricingResponse = CompletableFuture.supplyAsync(() -> {
-            return pricingTask.submit(pricingCountryCodes);
-        });
+        CompletableFuture<Map<String, String>> pricingResponse = CompletableFuture.supplyAsync(() ->
+                pricingTask.submit(pricingCountryCodes)
+        );
 
         AggregationResponse aggregatedData = new AggregationResponse();
         return CompletableFuture.allOf(shipmentResponse, trackingResponse, pricingResponse)

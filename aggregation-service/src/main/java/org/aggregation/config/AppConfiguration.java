@@ -13,6 +13,7 @@ public class AppConfiguration {
 
     @Value("${service.timeout}")
     private Long DEFAULT_TIMEOUT;
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder

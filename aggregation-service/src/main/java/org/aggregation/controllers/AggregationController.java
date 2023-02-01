@@ -1,6 +1,6 @@
 package org.aggregation.controllers;
 
-import org.aggregation.dto.AggregationResponse;
+import org.aggregation.model.AggregationResponse;
 import org.aggregation.services.AggregationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

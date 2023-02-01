@@ -1,6 +1,5 @@
 package org.aggregation.services;
 
-import org.aggregation.services.BackendClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

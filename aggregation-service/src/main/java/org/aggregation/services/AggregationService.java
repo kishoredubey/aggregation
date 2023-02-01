@@ -1,6 +1,6 @@
 package org.aggregation.services;
 
-import org.aggregation.dto.AggregationResponse;
+import org.aggregation.model.AggregationResponse;
 
 import java.util.List;
 
