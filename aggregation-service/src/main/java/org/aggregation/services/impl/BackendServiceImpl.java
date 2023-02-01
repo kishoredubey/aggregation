@@ -59,8 +59,6 @@ public class BackendServiceImpl implements IBackendService{
 		Map<String, List<String>> map = new HashMap<>();
 		for(String orderNumber:orderNumbers) {
 			ResponseEntity<List<String>> response;
-			
-			
 			try {
 				String uri=buidURi("orderNumber",orderNumber,"shipment-products");
 				response= restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {
