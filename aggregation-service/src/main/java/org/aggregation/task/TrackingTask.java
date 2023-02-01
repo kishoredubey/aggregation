@@ -1,4 +1,4 @@
-package org.aggregation.services;
+package org.aggregation.task;
 
 import org.aggregation.services.BackendClient;
 import org.springframework.stereotype.Component;
@@ -11,10 +11,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
-public class PricingTask {
+public class TrackingTask {
     private BackendClient backendClient;
 
-    public PricingTask(BackendClient backendClient) {
+    public TrackingTask(BackendClient backendClient) {
         this.backendClient = backendClient;
     }
 
@@ -27,9 +27,9 @@ public class PricingTask {
         for (String order : orders) {
             executor.execute(() -> {
                 // code to be executed asynchronously
-                String price = backendClient.getPricing(order);
-                if (price != null) {
-                    response.put(order, price);
+                String status = backendClient.getTrackStatus(order);
+                if (status != null) {
+                    response.put(order, status);
                 }
                 latch.countDown();
             });

@@ -1,4 +1,4 @@
-package org.aggregation.services;
+package org.aggregation.task;
 
 import org.aggregation.services.BackendClient;
 import org.springframework.stereotype.Component;

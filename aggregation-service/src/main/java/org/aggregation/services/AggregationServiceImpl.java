@@ -1,6 +1,9 @@
 package org.aggregation.services;
 
 import org.aggregation.dto.AggregationResponse;
+import org.aggregation.task.PricingTask;
+import org.aggregation.task.ShipmentTask;
+import org.aggregation.task.TrackingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
