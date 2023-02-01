@@ -1,5 +1,5 @@
 # Aggregation Service
-- Please refer to sequence flow ![ServiceSlow](/ServiceFlow.png)
+![ServiceSlow](/ServiceFlow.png)
 - AggregateService `asynchronously` submits the tasks for each data point to 
   - ShipmentTask
   - PricingTask
