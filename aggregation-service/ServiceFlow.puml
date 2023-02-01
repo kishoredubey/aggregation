@@ -1,12 +1,37 @@
 @startuml
+title
+Aggregate Service
+end title
+
+participant AggregationController
+participant AggregationService
+participant ShipmentTask
+participant TrackingTask
+participant PricingTask
+participant BackendClient
 
 AggregationController -> AggregationService
-AggregationService -> ShipmentTask ++ #red: start
-ShipmentTask --> AggregationService --#red: done
-AggregationService -> TrackingTas ++ #red: start
-TrackingTas --> AggregationService --#red: done
-AggregationService -> PricingTask ++ #red: start
-PricingTask --> AggregationService --#red: done
-
-
+par
+    AggregationService -> ShipmentTask ++ #red: get shipment status
+    par
+        ShipmentTask -> BackendClient ++ #red: network call
+        BackendClient --> ShipmentTask -- #red:
+    end
+    ShipmentTask --> AggregationService --#red:
+    else
+    AggregationService -> TrackingTask ++ #red: get tracking status
+    par
+        TrackingTask -> BackendClient ++ #red: network call
+        BackendClient --> TrackingTask -- #red:
+    end
+    TrackingTask --> AggregationService --#red:
+    else
+    AggregationService -> PricingTask ++ #red: get pricing
+    par
+        PricingTask -> BackendClient ++ #red: network call
+        BackendClient --> PricingTask -- #red:
+    end
+    PricingTask --> AggregationService --#red:
+end
+AggregationService -> AggregationController
 @enduml
