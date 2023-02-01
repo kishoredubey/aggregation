@@ -1,6 +1,7 @@
 package org.aggregation.task;
 
 import org.aggregation.services.BackendClient;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class ShipmentTask {
         this.backendClient = backendClient;
     }
 
-    public Map<String, List<String>> submit(List<String> orders) {
+    public @NonNull Map<String, List<String>> submit(final List<String> orders) {
         Map<String, List<String>> response = new HashMap<>();
         if (orders == null || orders.isEmpty()) return response;
 

@@ -13,9 +13,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AggregationServiceImpl implements AggregationService {
-    private ShipmentTask shipmentTask;
-    private TrackingTask trackingTask;
-    private PricingTask pricingTask;
+    private final ShipmentTask shipmentTask;
+    private final TrackingTask trackingTask;
+    private final PricingTask pricingTask;
 
     @Autowired
     public AggregationServiceImpl(
@@ -28,12 +28,21 @@ public class AggregationServiceImpl implements AggregationService {
         this.pricingTask = pricingTask;
     }
 
+    /**
+     * @param shipmentOrderNumbers
+     * @param trackOrderNumbers
+     * @param pricingCountryCodes
+     * @return AggregationResponse
+     */
     @Override
     public AggregationResponse getAggregatedDetails(
             List<String> shipmentOrderNumbers,
             List<String> trackOrderNumbers,
             List<String> pricingCountryCodes
     ) {
+        /**
+         * Submit all three tasks [shipmentTask, trackingTask, pricingTask] asynchronously
+         **/
         CompletableFuture<Map<String, List<String>>> shipmentResponse = CompletableFuture.supplyAsync(() ->
                 shipmentTask.submit(shipmentOrderNumbers)
         );
@@ -46,6 +55,9 @@ public class AggregationServiceImpl implements AggregationService {
                 pricingTask.submit(pricingCountryCodes)
         );
 
+        /**
+         * Aggregate the response from all three asynchronous submissions.
+         */
         AggregationResponse aggregatedData = new AggregationResponse();
         return CompletableFuture.allOf(shipmentResponse, trackingResponse, pricingResponse)
                 .thenApply(v -> {
