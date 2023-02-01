@@ -1,31 +1,45 @@
 package org.aggregation.services.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.aggregation.dto.AggregationDto;
-import org.aggregation.services.IAggregationService;
-import org.aggregation.services.IProductService;
+import org.aggregation.dto.AggregationResponse;
+import org.aggregation.services.AggregationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class AggregationServiceImpl implements IAggregationService{
+import java.util.List;
+import java.util.Map;
 
-	@Autowired
-	IProductService productService;
-	
-	@Override
-	public AggregationDto getAggregatedProductDetail(List<String> shipmentOrderNumbers, List<String> trackOrderNumbers,
-			List<String> pricingCountryCodes) {
-		Map<String, List<String>> shipments = productService.getShipmentProducts(shipmentOrderNumbers);
-		Map<String, String> track = productService.getStatus(trackOrderNumbers);
-		Map<String, String> prices = productService.getPrice(pricingCountryCodes);
-		AggregationDto aggregatedData = new AggregationDto();
-		aggregatedData.setShipments(shipments);
-		aggregatedData.setTrack(track);
-		aggregatedData.setPrices(prices);
-		return aggregatedData;
-	}
+@Service
+public class AggregationServiceImpl implements AggregationService {
+    private ShipmentTask shipmentTask;
+    private TrackingTask trackingTask;
+    private PricingTask pricingTask;
+
+    @Autowired
+    public AggregationServiceImpl(
+            ShipmentTask shipmentTask,
+            TrackingTask trackingTask,
+            PricingTask pricingTask
+    ) {
+        this.shipmentTask = shipmentTask;
+        this.trackingTask = trackingTask;
+        this.pricingTask = pricingTask;
+    }
+
+    @Override
+    public AggregationResponse getAggregatedProductDetail(
+            List<String> shipmentOrderNumbers,
+            List<String> trackOrderNumbers,
+            List<String> pricingCountryCodes
+    ) {
+        AggregationResponse aggregatedData = new AggregationResponse();
+        Map<String, List<String>> shipments = shipmentTask.submit(shipmentOrderNumbers);
+        Map<String, String> track = trackingTask.submit(trackOrderNumbers);
+        Map<String, String> prices = pricingTask.submit(pricingCountryCodes);
+
+        aggregatedData.setShipments(shipments);
+        aggregatedData.setTrack(track);
+        aggregatedData.setPrices(prices);
+        return aggregatedData;
+    }
 
 }
