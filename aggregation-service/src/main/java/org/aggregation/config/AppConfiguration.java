@@ -18,6 +18,7 @@ public class AppConfiguration {
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder
                 .setReadTimeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
+                .setConnectTimeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
                 .build();
     }
 }

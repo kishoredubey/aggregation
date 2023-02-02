@@ -1,6 +1,5 @@
 package org.aggregation.services;
 
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,11 +46,13 @@ public class BackendClientImpl implements BackendClient {
         } catch (Exception e) {
             // track timeout exception here and report appropriately
         }
-        //char last = response.charAt(response.length() -1);
-        char first = response.charAt(0);
-        String valueOf = String.valueOf(first);
-        String replace = response.replace(valueOf, "");
-        return replace.trim();
+        String replace=null;
+        if(response!=null){
+            char first = response.charAt(0);
+            String valueOf = String.valueOf(first);
+            replace = response.replace(valueOf, "");
+        }
+        return replace;
     }
 
     @Override
