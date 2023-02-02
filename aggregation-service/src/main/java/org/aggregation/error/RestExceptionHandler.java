@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleCommonException(CommonException ex) {
+    public ResponseEntity<Object> handleCommonException(Exception ex) {
         ApiError apiError = new ApiError();
         apiError.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         apiError.setMessage(ex.getMessage());
