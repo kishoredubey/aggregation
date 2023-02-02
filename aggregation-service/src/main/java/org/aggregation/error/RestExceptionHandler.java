@@ -11,14 +11,13 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(CommonException.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleCommonException(CommonException ex) {
         ApiError apiError = new ApiError();
-        apiError.setHttpStatus(HttpStatus.BAD_REQUEST);
+        apiError.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         apiError.setMessage(ex.getMessage());
         apiError.setLocalDateTime(LocalDateTime.now());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
-
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
