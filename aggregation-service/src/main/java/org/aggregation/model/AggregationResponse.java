@@ -16,4 +16,7 @@ public class AggregationResponse {
     private Map<String, List<String>> shipments;
     private Map<String, String> track;
     private Map<String, String> prices;
+	
+    
+    
 }
