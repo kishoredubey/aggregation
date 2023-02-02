@@ -14,11 +14,11 @@ public class BackendClientImpl implements BackendClient {
     public static final String PRICING_ENDPOINT = "/pricing?countryCode={countryCode}";
 
     private RestTemplate restTemplate;
-    @Value("${service.base-url}")
-    private String BASE_URI;
+    private String backendEndpoint;
 
-    public BackendClientImpl(RestTemplate restTemplate) {
+    public BackendClientImpl(RestTemplate restTemplate, @Value("${service.base-url}") String backendEndpoint) {
         this.restTemplate = restTemplate;
+        this.backendEndpoint = backendEndpoint;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BackendClientImpl implements BackendClient {
         List<String> response = null;
         try {
             ResponseEntity<List> out = restTemplate.getForEntity(
-                    BASE_URI + SHIPMENT_STATUS_ENDPOINT, List.class, orderNumber
+                    backendEndpoint + SHIPMENT_STATUS_ENDPOINT, List.class, orderNumber
             );
             response = out.getBody();
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class BackendClientImpl implements BackendClient {
         String response = null;
         try {
             ResponseEntity<String> out = restTemplate.getForEntity(
-                    BASE_URI + TRACK_STATUS_ENDPOINT, String.class, orderNumber
+                    backendEndpoint + TRACK_STATUS_ENDPOINT, String.class, orderNumber
             );
             response = out.getBody();
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class BackendClientImpl implements BackendClient {
         String response = null;
         try {
             ResponseEntity<String> out = restTemplate.getForEntity(
-                    BASE_URI + PRICING_ENDPOINT, String.class, countryCode
+                    backendEndpoint + PRICING_ENDPOINT, String.class, countryCode
             );
             response = out.getBody();
         } catch (Exception e) {

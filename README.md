@@ -1,4 +1,6 @@
 # Aggregation Service
+# Swagger
+- Can be accessed at http://localhost:8080/swagger-ui/index.html when running the application in local.
 
 ![ServiceSlow](/ServiceFlow.png)
 

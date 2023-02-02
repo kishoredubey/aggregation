@@ -1,0 +1,2 @@
+wiremock-config:
+    backendEndpoint: http://localhost:9081

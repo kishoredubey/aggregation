@@ -1,10 +1,10 @@
 package org.aggregation.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aggregation.model.AggregationResponse;
 import org.aggregation.task.PricingTask;
 import org.aggregation.task.ShipmentTask;
 import org.aggregation.task.TrackingTask;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@Slf4j
 public class AggregationServiceImpl implements AggregationService {
     private final ShipmentTask shipmentTask;
     private final TrackingTask trackingTask;
     private final PricingTask pricingTask;
 
-    @Autowired
     public AggregationServiceImpl(
             ShipmentTask shipmentTask,
             TrackingTask trackingTask,
