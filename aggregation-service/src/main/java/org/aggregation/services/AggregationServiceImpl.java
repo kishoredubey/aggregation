@@ -5,7 +5,6 @@ import org.aggregation.model.AggregationResponse;
 import org.aggregation.task.PricingTask;
 import org.aggregation.task.ShipmentTask;
 import org.aggregation.task.TrackingTask;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
