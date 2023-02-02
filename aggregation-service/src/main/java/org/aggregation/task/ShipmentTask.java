@@ -1,5 +1,6 @@
 package org.aggregation.task;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aggregation.services.BackendClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Slf4j
 @Component
 public class ShipmentTask {
     private BackendClient backendClient;
@@ -39,6 +41,7 @@ public class ShipmentTask {
             latch.await();
         } catch (InterruptedException e) {
             // handle the error appropriately
+            log.error("error during shipment task {}", e.getCause());
         } finally {
             executor.shutdown();
         }
